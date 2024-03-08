@@ -1,5 +1,3 @@
-
-
 import http.server
 import socketserver
 import random
@@ -13,7 +11,6 @@ class RandomLineHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
 
-        # Choose a random line
         random_line = random.choice(lines)
 
 
@@ -25,7 +22,7 @@ class RandomLineHandler(http.server.SimpleHTTPRequestHandler):
 
         self.wfile.write(random_line.encode())
 
-port = 8000
+port = 19132
 httpd = socketserver.TCPServer(('', port), RandomLineHandler)
 print(f'Serving on port {port}...')
 httpd.serve_forever()
