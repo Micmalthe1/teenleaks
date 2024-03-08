@@ -3,22 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teen leaks</title>
+    <title>Random Line Chooser</title>
 </head>
 <body>
-    <!-- Your website content here -->
+    <h1>Random Line from Document</h1>
+    <p id="randomLine"></p>
+    <button onclick="getRandomLine()">Get Random Line</button>
 
-    <script>
-        // Replace with the actual file URL
-        const fileUrl = 'Release.rar';
-
-        // Create a hidden link element
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = 'Release.rar'; // Specify the desired file name
-
-        // Trigger the download programmatically
-        link.click();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
