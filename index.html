@@ -3,13 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blazes key system</title>
+    <title>Random Line Display</title>
 </head>
 <body>
+    <?php
+        // Function to get client IP address
+        function getClientIp() {
+            $ipaddress = '';
+            if (getenv('HTTP_CLIENT_IP'))
+                $ipaddress = getenv('HTTP_CLIENT_IP');
+            else if(getenv('HTTP_X_FORWARDED_FOR'))
+                $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+            else if(getenv('HTTP_X_FORWARDED'))
+                $ipaddress = getenv('HTTP_X_FORWARDED');
+            else if(getenv('HTTP_FORWARDED_FOR'))
+                $ipaddress = getenv('HTTP_FORWARDED_FOR');
+            else if(getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+            else if(getenv('REMOTE_ADDR'))
+                $ipaddress = getenv('REMOTE_ADDR');
+            else
+                $ipaddress = 'UNKNOWN';
+            return $ipaddress;
+        }
 
-    <p id="randomLine"></p>
-    <button onclick="getRandomLine()">Get Key</button>
+        // Check if the IP address has already fetched a key today
+        $ip = getClientIp();
+        $filename = 'ip_log.txt';
+        $lastAccess = file_get_contents($filename);
 
-    <script src="script.js"></script>
+        // Get the current date
+        $currentDate = date('Y-m-d');
+
+        // HTML content generation
+        echo "<!DOCTYPE html>";
+        echo "<html lang='en'>";
+        echo "<head>";
+        echo "<meta charset='UTF-8'>";
+        echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+        echo "<title>Random Line Display</title>";
+        echo "</head>";
+        echo "<body>";
+        echo "<h1>Random Line Display</h1>";
+
+        if ($lastAccess != $currentDate) {
+            // Read keys from keys.txt
+            $keys = file('keys.txt', FILE_IGNORE_NEW_LINES);
+
+            // Select a random key
+            $randomKey = $keys[array_rand($keys)];
+
+            // Write the IP address and today's date to the log file
+            file_put_contents($filename, $currentDate . PHP_EOL, FILE_APPEND);
+
+            // Display the random key
+            echo "<p>Random line from keys.txt:</p>";
+            echo "<p>$randomKey</p>";
+        } else {
+            echo "<p>You have already fetched a key today.</p>";
+        }
+
+        echo "</body>";
+        echo "</html>";
+    ?>
+
 </body>
 </html>
