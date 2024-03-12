@@ -22,7 +22,7 @@ class RandomLineHandler(http.server.SimpleHTTPRequestHandler):
 
         self.wfile.write(random_line.encode())
 
-port = 19132
+port = 5000
 httpd = socketserver.TCPServer(('', port), RandomLineHandler)
 print(f'Serving on port {port}...')
 httpd.serve_forever()
